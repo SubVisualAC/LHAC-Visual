@@ -30,19 +30,22 @@ regget = Entry(reg)
 regget.pack()
 
 regget.delete(0, END)
-regget.insert(0, "Please enter new per minuite rate")
+regget.insert(0, "Enter REG")
 
 btn = tkinter.Button(reg, text="Enter",command = sendreg)
 btn.pack()
 
 def main():
+    global localreg
     window = tkinter.Tk()
     window.title("Loughborough Car Park System")
     window.geometry("400x800")
 
     gaf = tkinter.Label(window, text="Welcome to Loughborough Car Park!")
     gaf.pack()
-
+    
+    gaf2 = tkinter.Label(window, text=("Your reg is: ",localreg))
+    
     spacer = tkinter.Label(window, text="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     spacer.pack()
 
