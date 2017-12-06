@@ -1,12 +1,15 @@
 import tkinter
 from tkinter import *
 import csv
-from time import sleep
+import time
+from time import *
 
 val = 0
 inti = 'nil'
 aaa = 0
 localreg = 'nil'
+time = 0
+
 
 def sendreg():
     global localreg
@@ -51,11 +54,6 @@ def main():
         pphdisplay.configure(text=line)
         list.close()
     
-    def getCoin():
-        global val
-        val = val + float(coinentry.get())
-        currentvalue.configure(text=val)
-    
     window = tkinter.Tk()
     window.title("Loughborough Car Park System")
     window.geometry("400x800")
@@ -87,18 +85,9 @@ def main():
     spacer3 = tkinter.Label(window, text="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     spacer3.pack()
 
-    currentvalue = tkinter.Label(window, text="nil")
-    currentvalue.pack()
-
-    coinentry = Entry(window)
-    coinentry.pack()
-
-    coinentry.delete(0, END)
-    coinentry.insert(0, "Please Enter currency")
-
-    btn1 = tkinter.Button(window, text="Give Currency...", command=getCoin)
-    btn1.pack()
-
+    btn = tkinter.Button(window, text="Purchase Ticket", command=moneyIns)
+    btn.pack()
+    
     btn2 = tkinter.Button(window, text="Control Window Login", command=engineerLogin)
     btn2.pack()
     
@@ -136,8 +125,6 @@ def engineer():
     btn1.pack()
     
     engineer.mainloop
-
-
 
 def engineerLogin():
     def checkLogin():
@@ -181,3 +168,72 @@ def engineerLogin():
     
     login.mainloop
 
+def moneyIns():
+
+    def getCoin():
+        global val
+        val = val + float(coinentry.get())
+        currentvalue.configure(text=("£ ",val))
+
+    def pushTime():
+        global time
+        time = float(hrentry.get())
+        hrval.configure(text=(time," Hours"))
+        list = open("ParkingData.txt","r")
+        line = list.readline()
+        line = list.readline()
+        temp = line * time
+        label.configure(text=("Cost: ",temp))
+        list.close()
+
+    def confirm():
+        global val
+        global time
+        global localreg
+        localtime = gmtime()
+        if val > 0 and time > 0:
+            print("Valid")
+            with open("Logs.csv",newline=",") as logs:
+                temp = csv.reader(logs)
+                data = row
+                data[0]=localreg
+                data[1]=val
+                data[2]=time
+                data[3]=localtime
+                
+            
+    
+    money = tkinter.Tk()
+    money.title("Ticket GUI")
+    money.geometry("300x600")
+
+    label = tkinter.Label(money, text=("Cost:",nil))
+    label.pack()
+
+    currentvalue = tkinter.Label(money, text="£0")
+    currentvalue.pack()
+
+    coinentry = Entry(money)
+    coinentry.pack()
+
+    coinentry.delete(0, END)
+    coinentry.insert(0, "Please Enter currency")
+
+    btn1 = tkinter.Button(money, text="Give Currency...", command=getCoin)
+    btn1.pack()
+
+
+    hrval = tkinter.Label(money, text="0 Hours")
+    hrval.pack()
+
+    hrentry = Entry(money)
+    hrentry.pack()
+
+    hrentry.delete(0, END)
+    hrentry.insert(0, "Please Enter how long you wish to park")
+
+    btn2 = tkinter.Button(money, text="Update Time", command=pushTime)
+    btn2.pack()
+
+    btn3 = tkinter.Button(money, text="Confirm", command=confirm)
+    btn3.pack()
