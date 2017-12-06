@@ -13,7 +13,7 @@ def sendreg():
     temp = regget.get()
     localreg = temp
     main()
-    reg.Destroy()
+    reg.destroy()
 
 reg = tkinter.Tk()
 reg.title("Please enter your reg")
@@ -36,6 +36,8 @@ btn.pack()
 
 def main():
 
+    global localreg
+    
     def getSpace():
         list = open("ParkingData.txt","r")
         line = list.readline()
@@ -61,6 +63,9 @@ def main():
     gaf = tkinter.Label(window, text="Welcome to Loughborough Car Park!")
     gaf.pack()
 
+    gaf2 = tkinter.Label(window, text=("Your reg is: ",localreg))
+    gaf2.pack()
+    
     spacer = tkinter.Label(window, text="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     spacer.pack()
 
