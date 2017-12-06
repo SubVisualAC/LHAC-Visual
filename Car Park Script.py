@@ -3,8 +3,6 @@ from tkinter import *
 import csv
 from time import sleep
 
-#Hello
-
 val = 0
 inti = 'nil'
 aaa = 0
@@ -17,10 +15,9 @@ def sendreg():
     main()
     reg.Destroy()
 
-
 reg = tkinter.Tk()
 reg.title("Please enter your reg")
-reg.geometry("200x100")
+reg.geometry("350x100")
 
 welcome = tkinter.Label(reg, text="Welcome to the Loughborough Car park!")
 welcome.pack()
@@ -32,12 +29,31 @@ regget = Entry(reg)
 regget.pack()
 
 regget.delete(0, END)
-regget.insert(0, "Please enter new per minuite rate")
+regget.insert(0, "Please enter reg.")
 
 btn = tkinter.Button(reg, text="Enter",command = sendreg)
 btn.pack()
 
 def main():
+
+    def getSpace():
+        list = open("ParkingData.txt","r")
+        line = list.readline()
+        spacedisplay.configure(text=line)
+        list.close()
+     
+    def getPph():
+        list = open("ParkingData.txt","r")
+        line = list.readline()
+        line = list.readline()
+        pphdisplay.configure(text=line)
+        list.close()
+    
+    def getCoin():
+        global val
+        val = val + float(coinentry.get())
+        currentvalue.configure(text=val)
+    
     window = tkinter.Tk()
     window.title("Loughborough Car Park System")
     window.geometry("400x800")
@@ -85,7 +101,6 @@ def main():
 
     getSpace()
     getPph()
-
 
 def engineer():
 
@@ -161,21 +176,3 @@ def engineerLogin():
     
     login.mainloop
 
-def getSpace():
-    list = open("ParkingData.txt","r")
-    line = list.readline()
-    spacedisplay.configure(text=line)
-    list.close()
-     
-def getPph():
-    list = open("ParkingData.txt","r")
-    line = list.readline()
-    line = list.readline()
-    pphdisplay.configure(text=line)
-    list.close()
-    
-def getCoin():
-    global val
-    val = val + float(coinentry.get())
-    currentvalue.configure(text=val)
-        
